@@ -18,14 +18,25 @@ class TweetGenerator < ApplicationInteraction
 
   def substitute_hash
     {
-      'barack%20obama' => /\bbar(r){0,1}ack{0,1}\s{0,1}(obama){0,1}/i,
-      'crooked%20hillary' => /\bhillary{0,1}(\s{0,1}(clinton)){0,1}/i,
-      "lyin'%20ted" => /\bted{0,1}(\s{0,1}(cruz)){0,1}/i,
-      'cnn' => /cnn/i,
-      'obamacare' => /obama/i,
-      'lord%20sugar' => /\b(lord{0,1}(\s|\_){0,1}){0,1}sugar|lord/i,
-      'low%20energy%20jeb' => /\bjeb{0,1}(\s{0,1}(bush)){0,1}/i,
-      'lightweight%20marco' => /\bmarco{0,1}(\s{0,1}rubio){0,1}/i,
+      "barack obama" => /\bbar(r){0,1}ack{0,1}\s{0,1}(obama){0,1}/i,
+      "crooked hillary" => /\bhillary{0,1}(\s{0,1}(clinton)){0,1}/i,
+      "lyin' ted" => /\bted{0,1}(\s{0,1}(cruz)){0,1}/i,
+      "cnn" => /cnn/i,
+      "obamacare" => /obama/i,
+      "lord sugar" => /\b(lord{0,1}(\s|\_){0,1}){0,1}sugar|lord/i,
+      "low energy jeb" => /\bjeb{0,1}(\s{0,1}(bush)){0,1}/i,
+      "lightweight marco" => /\bmarco{0,1}(\s{0,1}rubio){0,1}/i,
+      "weak on illegal immigration" => %r{
+        \bted{0,1}(\s{0,1}(cruz)){0,1}|
+        \bmarco{0,1}([\s]{0,1}(rub){0,1}io){0,1}|
+        \bjeb{0,1}(\s{0,1}(bush)){0,1}|
+        \bhillary{0,1}(\s{0,1}(clinton)){0,1}|
+        \bben([\s]{0,1}carson){0,1}|
+        rubio|
+        kasich|
+        jo(h){0,1}n ossoff|
+        (doug[\s]{0,1}){0,1}jones
+      }ix
     }
   end
 end
