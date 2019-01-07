@@ -6,6 +6,8 @@ class TweetGenerator < ApplicationInteraction
 
   string :name
 
+  validates :name, presence: true
+
   def execute
     key = substitute_hash.keys.sample
     repsonse = HTTParty.get("https://twitter.com/search?f=tweets&q=from%3Arealdonaldtrump%20#{key}")
