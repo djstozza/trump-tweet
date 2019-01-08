@@ -19,6 +19,10 @@ gem 'nokogiri'
 gem 'httparty'
 gem 'active_interaction'
 gem 'active_interaction-extras'
+gem 'figaro'
+gem 'twitter'
+gem 'omniauth'
+gem 'omniauth-twitter'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
