@@ -40,6 +40,7 @@ class TweetGenerator < ApplicationInteraction
       "lord sugar" => /\b(lord{0,1}(\s|\_){0,1}){0,1}sugar|lord/i,
       "low energy jeb" => /\bjeb{0,1}([\s]{0,1}(bush)){0,1}/i,
       "lightweight marco" => /\bmarco{0,1}([\s]{0,1}rubio){0,1}/i,
+      "fake news the enemy of the people" => /\b(the\s){0,1}fake\snews(\smedia){0,1}/i,
       "weak on illegal immigration" => %r{
         \bted{0,1}([\s]{0,1}(cruz)){0,1}|
         \bmarco{0,1}([\s]{0,1}(rub){0,1}io){0,1}|
