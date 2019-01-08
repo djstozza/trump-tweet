@@ -3,7 +3,9 @@ class Api::V1::TweetsController < ::ApplicationController
     outcome = TweetGenerator.run(name: permitted_params[:name])
 
     if outcome.valid?
-      render json: { result: outcome.result }
+      render json: {
+        success: 'Your tweet has been successfully created and will appear in the timeline below momentarily.',
+      }
     else
       render json: { error: outcome.errors }, status: :unprocessable_entity
     end

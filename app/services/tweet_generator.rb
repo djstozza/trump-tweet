@@ -3,6 +3,7 @@ require 'httparty'
 class TweetGenerator < ApplicationInteraction
   include HTTParty
   include Nokogiri
+  include Twitter
 
   string :name
 
@@ -10,6 +11,8 @@ class TweetGenerator < ApplicationInteraction
 
   def execute
     twitter_client.update(tweet)
+  rescue Twitter::Error::Forbidden
+    retry
   end
 
   private

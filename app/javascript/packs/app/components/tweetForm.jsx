@@ -51,46 +51,39 @@ class TweetForm extends Component {
 
   render () {
     return (
-      <div className='container-fluid'>
-        <div className='row'>
-          <div className='col col-md-6 offset-md-3 col-sm-12 col-12'>
-            <Card>
-              <CardHeader>
-                <h4>TrumpTweet</h4>
-              </CardHeader>
-              <CardBody>
-                <Form onSubmit={ this.handleSubmit } >
-                  <FormGroup>
-                    <Label for="name">
-                      Ever wondered what it'd be like to be insulted by Donald J. Trump on Twitter?
-                      Well now's your chance...
-                    </Label>
-                    <Input
-                      type="string"
-                      name="name"
-                      id="name"
-                      invalid={ this.showError('name') !== undefined  }
-                      placeholder="Enter your Twitter handle here"
-
-                      onChange={ this.handleChange }
-                    />
-                    <div className="invalid-feedback">
-                        { this.showError('name') }
-                    </div>
-                  </FormGroup>
-                  <Button
-                    color="danger"
-                    type="submit"
-                    disabled={ !this.state.name }
-                  >
-                      Make Twitter Great Again
-                  </Button>
-                </Form>
-              </CardBody>
-            </Card>
-          </div>
-        </div>
-      </div>
+      <Card>
+        <CardHeader>
+          <h4>TrumpTweet</h4>
+        </CardHeader>
+        <CardBody>
+          <Form onSubmit={ this.handleSubmit } >
+            <FormGroup>
+              <Label for="name">
+                Ever wondered what it'd be like to be insulted by Donald J. Trump on Twitter?
+                Well now's your chance...
+              </Label>
+              <Input
+                type="string"
+                name="name"
+                id="name"
+                invalid={ this.showError('name') !== undefined  }
+                placeholder="Enter your Twitter handle or name here"
+                onChange={ this.handleChange }
+              />
+              <div className="invalid-feedback">
+                  { this.showError('name') }
+              </div>
+            </FormGroup>
+            <Button
+              color="danger"
+              type="submit"
+              disabled={ !this.state.name }
+            >
+              Make Twitter Great Again
+            </Button>
+          </Form>
+        </CardBody>
+      </Card>
     )
   }
 }
