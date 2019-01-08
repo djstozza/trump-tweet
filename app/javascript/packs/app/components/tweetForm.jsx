@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import addTweet from '../actions/tweets/addTweet';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardBody, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import Alert from 'react-s-alert';
 
 class TweetForm extends Component {
   constructor (props) {
@@ -14,7 +15,7 @@ class TweetForm extends Component {
     this.showError = this.showError.bind(this);
 
     this.state = {
-      name: "",
+      name: '',
     }
   }
 
@@ -26,6 +27,7 @@ class TweetForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.addTweet(this.state);
+    document.getElementById('name').value = '';
   }
 
   showError(type) {
@@ -37,16 +39,29 @@ class TweetForm extends Component {
   componentDidUpdate (prevProps, prevState) {
     const props = this.props;
 
-
     if (prevProps === props) {
       return;
     }
 
-    this.setState({ error: this.props.error });
+    if (props.success && props.success !== this.state.success) {
+      this.alert('success', props.success);
+    }
 
     this.setState({
       ...props,
     });
+  }
+
+  alert (type, message) {
+    return (
+      Alert[ type ](
+        message, {
+          position: 'bottom',
+          effect: 'bouncyflip',
+          timeout: 5000,
+        }
+      )
+    );
   }
 
   render () {
@@ -91,6 +106,7 @@ class TweetForm extends Component {
 function mapStateToProps (state) {
   return {
     name: state.TweetsReducer.name,
+    success: state.TweetsReducer.success,
     error: state.TweetsReducer.error,
   }
 }
