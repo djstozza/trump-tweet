@@ -14,6 +14,7 @@ export default function addTweet (params) {
       },
     }).then(res => {
       dispatch({ type: ADD_TWEET, payload: res.data });
+      dispatch({ type: ADD_TWEET, payload: { success: '' } });
     }).catch(error => {
       dispatch({ type: SHOW_TWEET_ERRORS, payload: { error: error.response } });
     });

@@ -5,29 +5,13 @@ import addTweet from '../actions/tweets/addTweet';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardBody, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import Alert from 'react-s-alert';
+import { Formik } from 'formik';
 
 class TweetForm extends Component {
   constructor (props) {
     super(props);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.showError = this.showError.bind(this);
-
-    this.state = {
-      name: '',
-    }
-  }
-
-  handleChange(event) {
-    const target = event.target;
-    this.setState({ [ target.name ]: target.value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.addTweet(this.state);
-    document.getElementById('name').value = '';
   }
 
   showError(type) {
@@ -43,7 +27,7 @@ class TweetForm extends Component {
       return;
     }
 
-    if (props.success && props.success !== this.state.success) {
+    if (props.success) {
       this.alert('success', props.success);
     }
 
@@ -65,38 +49,60 @@ class TweetForm extends Component {
   }
 
   render () {
+    self = this;
+
     return (
       <Card>
         <CardHeader>
           <h4>TrumpTweet</h4>
         </CardHeader>
         <CardBody>
-          <Form onSubmit={ this.handleSubmit } >
-            <FormGroup>
-              <Label for="name">
-                Ever wondered what it'd be like to be insulted by Donald J. Trump on Twitter?
-                Well now's your chance...
-              </Label>
-              <Input
-                type="string"
-                name="name"
-                id="name"
-                invalid={ this.showError('name') !== undefined  }
-                placeholder="Enter your Twitter handle or name here"
-                onChange={ this.handleChange }
-              />
-              <div className="invalid-feedback">
-                  { this.showError('name') }
-              </div>
-            </FormGroup>
-            <Button
-              color="danger"
-              type="submit"
-              disabled={ !this.state.name }
-            >
-              Make Twitter Great Again
-            </Button>
-          </Form>
+        <Formik
+          initialValues={{ name: '' }}
+          validate={values => {
+            let errors = {};
+            if (!values.name) {
+              errors.name = 'is required';
+            }
+
+            return errors;
+          }}
+          onSubmit={
+            (values, { setSubmitting, resetForm }) => {
+              setSubmitting(true);
+              self.props.addTweet(values);
+              resetForm({ name: '' });
+            }
+          }
+        >
+          {
+            ({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+              <Form onSubmit={handleSubmit}>
+                <FormGroup>
+                <Label for="name">
+                  Ever wondered what it'd be like to be insulted by Donald J. Trump on Twitter?
+                  Well now's your chance...
+                </Label>
+                <Input
+                  type="name"
+                  name="name"
+                  invalid={ this.showError('name') !== undefined || (errors.name && touched.name) }
+                  placeholder="Enter your Twitter handle or name here"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}
+                />
+                <div className="invalid-feedback">
+                  {this.showError('name') || (errors.name && touched.name && errors.name) }
+                </div>
+                </FormGroup>
+                <Button color="danger" type="submit" disabled={isSubmitting || !values.name}>
+                  Make Twitter Great Again
+                </Button>
+              </Form>
+            )
+          }
+          </Formik>
         </CardBody>
       </Card>
     )
@@ -105,7 +111,6 @@ class TweetForm extends Component {
 
 function mapStateToProps (state) {
   return {
-    name: state.TweetsReducer.name,
     success: state.TweetsReducer.success,
     error: state.TweetsReducer.error,
   }
@@ -120,6 +125,5 @@ function mapDispatchToProps (dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(TweetForm);
 
 TweetForm.propTypes = {
-  name: PropTypes.string,
   addTweet: PropTypes.func.isRequired
 }
