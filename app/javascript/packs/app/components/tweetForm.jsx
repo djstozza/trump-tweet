@@ -77,24 +77,24 @@ class TweetForm extends Component {
         >
           {
             ({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} className='tweet-form'>
                 <FormGroup>
-                <Label for="name">
-                  Ever wondered what it'd be like to be insulted by Donald J. Trump on Twitter?
-                  Well now's your chance...
-                </Label>
-                <Input
-                  type="name"
-                  name="name"
-                  invalid={ this.showError('name') !== undefined || (errors.name && touched.name) }
-                  placeholder="Enter your Twitter handle or name here"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.name}
-                />
-                <div className="invalid-feedback">
-                  {this.showError('name') || (errors.name && touched.name && errors.name) }
-                </div>
+                  <p>
+                    Ever wondered what it'd be like to be insulted by Donald J. Trump on Twitter?
+                    Well now's your chance...
+                  </p>
+                  <Input
+                    type="name"
+                    name="name"
+                    invalid={ this.showError('name') !== undefined || (errors.name && touched.name) }
+                    placeholder="Enter your Twitter handle or name here"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.name}
+                  />
+                  <div className="invalid-feedback">
+                    {this.showError('name') || (errors.name && touched.name && errors.name) }
+                  </div>
                 </FormGroup>
                 <Button color="danger" type="submit" disabled={isSubmitting || !values.name}>
                   Make Twitter Great Again
