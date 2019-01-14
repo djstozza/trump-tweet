@@ -8,7 +8,7 @@ class LandingPage extends React.Component {
   }
 
   calculateContainerHeight () {
-    const timelineContainerHeight = window.innerHeight - document.getElementById('form-container').clientHeight - 40
+    const timelineContainerHeight = window.innerHeight - document.getElementById('form-container').clientHeight
     document.getElementById('timeline-container').style.height = `${timelineContainerHeight}px`
   }
 

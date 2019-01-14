@@ -87,7 +87,7 @@ class TweetForm extends Component {
                     type="name"
                     name="name"
                     invalid={ this.showError('name') !== undefined || (errors.name && touched.name) }
-                    placeholder="Enter your Twitter handle or name here"
+                    placeholder="Enter your Twitter handle or name"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.name}
