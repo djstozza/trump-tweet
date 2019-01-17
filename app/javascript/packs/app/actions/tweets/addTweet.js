@@ -10,7 +10,10 @@ export default function addTweet (params) {
       method: 'POST',
       headers: { 'X-CSRF-Token': token },
       data: {
-        tweet: { name: params.name },
+        tweet: {
+          name: params.name,
+          phrase: params.phrase, 
+        },
       },
     }).then(res => {
       dispatch({ type: ADD_TWEET, payload: res.data });

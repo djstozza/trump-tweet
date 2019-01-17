@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :tweets, only: [:create]
+      resources :tweets, only: [:create]
+      resources :tweet_options, only: [:index]
     end
   end
   root to: "pages#root"

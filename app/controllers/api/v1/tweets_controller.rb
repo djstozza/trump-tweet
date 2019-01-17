@@ -1,6 +1,6 @@
 class Api::V1::TweetsController < ::ApplicationController
   def create
-    outcome = TweetGenerator.run(name: permitted_params[:name])
+    outcome = TweetGenerator.run(permitted_params)
 
     if outcome.valid?
       render json: {
@@ -12,6 +12,6 @@ class Api::V1::TweetsController < ::ApplicationController
   end
 
   def permitted_params
-    params.require(:tweet).permit(:name)
+    params.require(:tweet).permit(:name, :phrase)
   end
 end

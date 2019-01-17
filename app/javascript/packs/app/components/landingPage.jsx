@@ -4,11 +4,12 @@ import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed';
 
 class LandingPage extends React.Component {
   componentDidMount () {
+    this.calculateContainerHeight()
     window.addEventListener('resize', this.calculateContainerHeight());
   }
 
   calculateContainerHeight () {
-    const timelineContainerHeight = window.innerHeight - document.getElementById('form-container').clientHeight
+    const timelineContainerHeight = window.innerHeight - document.getElementById('form-container').clientHeight - 20
     document.getElementById('timeline-container').style.height = `${timelineContainerHeight}px`
   }
 

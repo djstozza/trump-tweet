@@ -4,9 +4,10 @@ class TweetGenerator < ApplicationInteraction
   include Twitter
 
   string :name
+  string :phrase, default: nil
 
   def execute
-    outcome = ::TweetFetcher.run(name: name)
+    outcome = ::TweetFetcher.run(name: name, phrase: phrase)
     errors.merge!(outcome.errors)
     halt_if_errors!
 

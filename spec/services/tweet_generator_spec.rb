@@ -6,10 +6,10 @@ RSpec.describe TweetGenerator, vcr: true do
 
     expect_to_execute(
       ::TweetFetcher,
-      with: { name: 'foo' },
+      with: { name: 'foo', phrase: nil },
       return: tweet_result
     )
-    result = described_class.run!(name: 'foo')
+    result = described_class.run!(name: 'foo', phrase: nil)
 
     expect(result.is_a?(Twitter::Tweet)).to be_truthy
     expect(result.text).to eq(tweet_result)
