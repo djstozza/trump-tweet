@@ -41,6 +41,8 @@
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
+import tweetService from '@/services/tweetService'
+
 export default {
   name: 'Form',
 
@@ -88,6 +90,7 @@ export default {
     },
     submit () {
       this.$v.$touch()
+      tweetService.postTweet(this.name, this.selectedPhrase)
     },
     clear () {
       this.$v.$reset()
