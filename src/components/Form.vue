@@ -33,6 +33,23 @@
       >
         clear
       </v-btn>
+      <v-snackbar
+        v-model='showSuccess'
+        color='success'
+        :timeout="5000"
+      >
+        {{ success }}
+      </v-snackbar>
+      <v-snackbar
+        :style="{'margin-bottom':calcMargin(i)}"
+        v-for="(error, i) in errors"
+        v-model='showErrors'
+        color='error'
+        :key="i"
+        :timeout="5000"
+      >
+        {{ error }}
+      </v-snackbar>
     </form>
   </v-container>
 </template>
@@ -54,7 +71,9 @@ export default {
   },
 
   data: () => ({
-    submitting: false
+    submitting: false,
+    showSuccess: false,
+    showErrors: false
   }),
 
   computed: {
@@ -72,6 +91,12 @@ export default {
       if (!this.$v.name.$dirty) return errors
       !this.$v.name.required && errors.push('Name is required.')
       return errors
+    },
+    errors () {
+      return this.$store.state.errors
+    },
+    success () {
+      return this.$store.state.success
     }
   },
 
@@ -86,20 +111,33 @@ export default {
       this.$v.name.$touch()
       this.$store.commit('setName', name)
     },
+    resetResponses () {
+      this.$store.commit('setErrors', [])
+      this.$store.commit('setSuccess', '')
+      this.showSuccess = false
+      this.showErrors = false
+    },
     async submit () {
       this.$v.$touch()
       this.submitting = true
+      this.resetResponses()
 
       const { success, errors } = await TweetService.postTweet(this.name, this.selectedPhrase)
 
       this.submitting = false
       this.$store.commit('setErrors', errors)
       this.$store.commit('setSuccess', success)
+      this.showSuccess = Boolean(success)
+      this.showErrors = Boolean(errors.length)
     },
     clear () {
       this.$v.$reset()
       this.$store.commit('setSelectedPhrase', null)
       this.$store.commit('setName', '')
+      this.resetResponses()
+    },
+    calcMargin (i) {
+      return (i * 60) + 'px'
     }
   }
 }

@@ -17,7 +17,7 @@ const tweetPhraseOptions = [
   { label: 'Little Marco', matcher: /marco(\s+rubio)?|rubio/ig },
   { label: 'Low energy Jeb', matcher: /jeb(\s+bush)?|bush/ig },
   { label: "Lyin' Ted", matcher: /ted(\s+cruz)?|cruz/ig },
-  { label: 'Mini Mike', matcher: /mike(\s+b)?(loomberg)?|bloomberg/ig },
+  { label: 'Mini Mike', matcher: /(mike|michael)(\s+b)?(loomberg)?|bloomberg/ig },
   { label: 'Nervous Nancy', matcher: /nancy(\s+pelosi)?|pelosi/ig },
   { label: 'Obamacare', matcher: /barack(\s+obama)?|obama/ig },
   { label: 'Shifty Schiff', matcher: /adam(\s+schiff)?|schiff/ig },
@@ -30,7 +30,7 @@ export default new Vuex.Store({
     selectedPhrase: null,
     name: '',
     errors: [],
-    successMessage: ''
+    success: ''
   },
   mutations: {
     setSelectedPhrase: (state, tweet) => {

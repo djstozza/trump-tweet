@@ -26,7 +26,9 @@ export default {
 
     const { hits: { hits } } = await client.search(args)
     const { _source: { text } } = sample(hits)
-    const status = unescape(text.replaceAll('@', '').replaceAll(matcher, name))
+
+    const status = unescape(text.replaceAll('@', '').replaceAll('&amp,', '&').replaceAll(matcher, name))
+
     try {
       await axios.post('/api/post', null, { params: { status } })
       return { success: 'Thank you for making Twitter great again!', errors: [] }
