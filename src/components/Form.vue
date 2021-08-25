@@ -23,13 +23,13 @@
         class='mr-4'
         color='primary'
         @click='submit'
-        :disabled='!name || !selectedPhrase'
+        :disabled='!name || !selectedPhrase || submitting'
       >
         submit
       </v-btn>
       <v-btn
         @click='clear'
-        :disabled='!name && !selectedPhrase'
+        :disabled='(!name && !selectedPhrase) || submitting'
       >
         clear
       </v-btn>
@@ -41,7 +41,7 @@
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
-import tweetService from '@/services/tweetService'
+import TweetService from '@/services/tweetService'
 
 export default {
   name: 'Form',
@@ -53,16 +53,14 @@ export default {
     selectedPhrase: { required }
   },
 
+  data: () => ({
+    submitting: false
+  }),
+
   computed: {
-    options () {
-      return this.$store.state.tweetPhraseOptions
-    },
-    name () {
-      return this.$store.state.name
-    },
-    selectedPhrase () {
-      return this.$store.state.selectedPhrase
-    },
+    options () { return this.$store.state.tweetPhraseOptions },
+    name () { return this.$store.state.name },
+    selectedPhrase () { return this.$store.state.selectedPhrase },
     selectErrors () {
       const errors = []
       if (!this.$v.selectedPhrase.$dirty) return errors
@@ -88,9 +86,15 @@ export default {
       this.$v.name.$touch()
       this.$store.commit('setName', name)
     },
-    submit () {
+    async submit () {
       this.$v.$touch()
-      tweetService.postTweet(this.name, this.selectedPhrase)
+      this.submitting = true
+
+      const { success, errors } = await TweetService.postTweet(this.name, this.selectedPhrase)
+
+      this.submitting = false
+      this.$store.commit('setErrors', errors)
+      this.$store.commit('setSuccess', success)
     },
     clear () {
       this.$v.$reset()

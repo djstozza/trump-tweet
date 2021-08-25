@@ -35,6 +35,6 @@ app.post('/api/post', ({ query: { status } }, res) => {
     })
     .then(success => {
       if (!success) return
-      res.send({ messages: ["You're making twitter great again!"] })
+      res.send()
     })
 })

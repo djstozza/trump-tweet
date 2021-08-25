@@ -1,6 +1,9 @@
 import axios from 'axios'
 import elasticsearch from 'elasticsearch'
 import { sample, unescape } from 'lodash'
+
+// import store from '@/store'
+
 const client = new elasticsearch.Client({
   host: process.env.VUE_APP_SEARCHLY_URL
 })
@@ -16,12 +19,7 @@ export default {
       body: {
         size: 100,
         query: {
-          match: {
-            text: {
-              query: label,
-              operator: 'and'
-            }
-          }
+          match: { text: { query: label, operator: 'and' } }
         }
       }
     }
@@ -29,15 +27,12 @@ export default {
     const { hits: { hits } } = await client.search(args)
     const { _source: { text } } = sample(hits)
     const status = unescape(text.replaceAll('@', '').replaceAll(matcher, name))
-
-    axios
-      .post('/api/post', null, { params: { status } })
-      .catch(({ response: { data: { messages } } }) => {
-        console.log('fooo', messages)
-      })
-      .then(({ data: { messages } = {} }) => {
-        if (!messages) return
-        console.log(messages)
-      })
+    try {
+      await axios.post('/api/post', null, { params: { status } })
+      return { success: 'Thank you for making Twitter great again!', errors: [] }
+    } catch (err) {
+      const { response: { data: { messages } } } = err
+      return { errors: messages, success: '' }
+    }
   }
 }

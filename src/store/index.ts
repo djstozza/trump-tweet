@@ -28,7 +28,9 @@ export default new Vuex.Store({
   state: {
     tweetPhraseOptions,
     selectedPhrase: null,
-    name: ''
+    name: '',
+    errors: [],
+    successMessage: ''
   },
   mutations: {
     setSelectedPhrase: (state, tweet) => {
@@ -36,7 +38,9 @@ export default new Vuex.Store({
     },
     setName: (state, name) => {
       state.name = name
-    }
+    },
+    setErrors: (state, errors) => { state.errors = errors },
+    setSuccess: (state, success) => { state.success = success }
   },
   actions: {
   },
