@@ -1,12 +1,13 @@
 const express = require('express')
 const request = require('request')
+const http = require('http')
+const socketIo = require('socket.io')
 
 const Twit = require('twit')
 require('dotenv').config()
 
 const app = express()
 const port = process.env.PORT || 8081
-const OAUTH_CALLBACK_URL = process.env.APP_URL
 
 const T = new Twit({
   consumer_key: process.env.TWITTER_API_KEY,
@@ -22,7 +23,17 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(port, () => console.log(`Listening on port ${port}`))
+const server = http.createServer(app)
+server.listen(port, () => console.log(`Listening on port ${port}`))
+
+const origins = process.env.NODE_ENV === 'development' ? [process.env.APP_URL, process.env.VUE_CLIENT_URL] : ['/']
+
+const io = socketIo(server, {
+  cors: {
+    origins,
+    methods: ['GET', 'POST']
+  }
+})
 
 app.post('/api/post', ({ query: { status } }, res) => {
   T.post('statuses/update', { status })
@@ -37,4 +48,10 @@ app.post('/api/post', ({ query: { status } }, res) => {
       if (!success) return
       res.send()
     })
+})
+
+const stream = T.stream('statuses/filter', { follow: process.env.TWITTER_ID })
+
+stream.on('tweet', ({ id }) => {
+  io.emit('broadcastTweet', id)
 })
