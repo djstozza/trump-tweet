@@ -54,13 +54,24 @@
   </v-container>
 </template>
 
-<script>
+<script lang='ts'>
+import Vue from 'vue'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
 import TweetService from '@/services/tweetService'
+import { TweetPhraseOption } from '../../types'
 
-export default {
+declare module 'vue/types/vue' {
+  interface Vue {
+    name: string,
+    options: TweetPhraseOption[],
+    resetResponses: () => void,
+    selectedPhrase: TweetPhraseOption
+  }
+}
+
+export default Vue.extend({
   name: 'Form',
 
   mixins: [validationMixin],
@@ -77,17 +88,17 @@ export default {
   }),
 
   computed: {
-    options () { return this.$store.state.tweetPhraseOptions },
+    options (): string { return this.$store.state.tweetPhraseOptions },
     name () { return this.$store.state.name },
     selectedPhrase () { return this.$store.state.selectedPhrase },
     selectErrors () {
-      const errors = []
+      const errors: string[] = []
       if (!this.$v.selectedPhrase.$dirty) return errors
       !this.$v.selectedPhrase.required && errors.push('Phrase is required')
       return errors
     },
     nameErrors () {
-      const errors = []
+      const errors: string[] = []
       if (!this.$v.name.$dirty) return errors
       !this.$v.name.required && errors.push('Name is required.')
       return errors
@@ -101,23 +112,23 @@ export default {
   },
 
   methods: {
-    setSelectedPhrase (label) {
+    setSelectedPhrase (label: string): void {
       this.$v.selectedPhrase.$touch()
       const tweetPhrase = this.options.find(option => option.label === label)
 
       this.$store.commit('setSelectedPhrase', tweetPhrase)
     },
-    setName (name) {
+    setName (name: string): void {
       this.$v.name.$touch()
       this.$store.commit('setName', name)
     },
-    resetResponses () {
+    resetResponses (): void {
       this.$store.commit('setErrors', [])
       this.$store.commit('setSuccess', '')
       this.showSuccess = false
       this.showErrors = false
     },
-    async submit () {
+    async submit (): Promise<void> {
       this.$v.$touch()
       this.submitting = true
       this.resetResponses()
@@ -130,15 +141,15 @@ export default {
       this.showSuccess = Boolean(success)
       this.showErrors = Boolean(errors.length)
     },
-    clear () {
+    clear (): void {
       this.$v.$reset()
       this.$store.commit('setSelectedPhrase', null)
       this.$store.commit('setName', '')
       this.resetResponses()
     },
-    calcMargin (i) {
+    calcMargin (i: number): string {
       return (i * 60) + 'px'
     }
   }
-}
+})
 </script>

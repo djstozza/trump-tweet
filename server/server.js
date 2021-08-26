@@ -1,5 +1,6 @@
 const express = require('express')
 const request = require('request')
+const path = require('path')
 const http = require('http')
 const socketIo = require('socket.io')
 
@@ -17,10 +18,10 @@ const T = new Twit({
 })
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../build')));
+  app.use(express.static(path.join(__dirname, '../dist')))
   app.get('*', (request, res) => {
-    res.sendFile(path.join(__dirname, '../build', 'index.html'));
-  });
+    res.sendFile(path.join(__dirname, '../dist', 'index.html'))
+  })
 }
 
 const server = http.createServer(app)

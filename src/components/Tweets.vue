@@ -15,10 +15,17 @@
   </v-container>
 </template>
 
-<script>
+<script lang='ts'>
+import Vue from 'vue'
 import { Timeline } from 'vue-tweet-embed'
 
-export default {
+declare module 'vue/types/vue' {
+  interface Vue {
+    latestTweetId: string
+  }
+}
+
+export default Vue.extend({
   name: 'Tweets',
 
   components: {
@@ -26,14 +33,13 @@ export default {
   },
 
   data: () => ({
-    latestTweetId: '',
-    timer: undefined
+    latestTweetId: ''
   }),
 
   sockets: {
-    broadcastTweet: function (data) {
+    broadcastTweet (data: string): void {
       this.latestTweetId = data
     }
   }
-}
+})
 </script>
