@@ -1,4 +1,4 @@
-# trump-tweet-1
+# Trump Tweet
 
 ## Project setup
 ```
