@@ -11,7 +11,7 @@ const tweetPhraseOptions = [
   { label: 'Dopey Sugar', matcher: /sugar((—|\s|-|\.)lord_sugar)?/ig },
   {
     label: 'Dumb as a rock',
-    matcher: /AOC|billmaher|Rex Tillerson|Mika|Jonah Goldberg @JonahNRO|Don Lemon|GlennBeck|Gumbel|Bryant|TheRickWilson|Toure|Bush|hardball_chris/ig
+    matcher: /AOC|billmaher|Rex Tillerson|Mika|Jonah Goldberg JonahNRO|Don Lemon|GlennBeck|Gumbel|Bryant|TheRickWilson|Toure|Bush|hardball_chris/ig
   },
   { label: 'Fake News CNN', matcher: /CNN/ig },
   { label: 'Lightweight Schneiderman', matcher: /(ag?)schneiderman|Eric Schneiderman|schneiderman/ig },
