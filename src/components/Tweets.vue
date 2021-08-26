@@ -1,16 +1,18 @@
 <style scoped>
   .timeline-container {
     text-align: center;
+    width: 100vw;
+    overflow-y: scroll;
   }
 </style>
 
 <template>
-  <v-container class='timeline-container'>
+  <v-container ref='container' fluid class='timeline-container' :style="{ 'maxHeight':height }">
     <Timeline
       :key='latestTweetId'
       id='hoaxDonalTrump'
       sourceType='profile'
-      :options="{ tweetLimit: '3', width: '600' }"
+      :options="{ tweetLimit: '10', width: '600' }"
     />
   </v-container>
 </template>
@@ -25,6 +27,8 @@ declare module 'vue/types/vue' {
   }
 }
 
+const APP_BAR_HEIGHT = 64
+
 export default Vue.extend({
   name: 'Tweets',
 
@@ -33,8 +37,25 @@ export default Vue.extend({
   },
 
   data: () => ({
+    height: '',
     latestTweetId: ''
   }),
+
+  methods: {
+    setContainerHeight () {
+      if (this.$refs.container) {
+        this.height = window.innerHeight - (this.$refs.container as HTMLElement).offsetTop - APP_BAR_HEIGHT + 'px'
+      }
+    }
+  },
+
+  mounted () {
+    this.setContainerHeight()
+  },
+
+  created () {
+    window.addEventListener('resize', this.setContainerHeight)
+  },
 
   sockets: {
     broadcastTweet (data: string): void {

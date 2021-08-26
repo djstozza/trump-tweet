@@ -1,5 +1,9 @@
 <template>
   <v-container fluid>
+    <div>
+      Enter your name or Twitter handle and select a phrase from the form below to get 'The Donald' to insult you.
+        #MGTA (Make Twitter Great Again)!
+    </div>
     <form>
       <v-text-field
         :error-messages='nameErrors'
