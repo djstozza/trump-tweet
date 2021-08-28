@@ -104,7 +104,7 @@ export default Vue.extend({
     nameErrors () {
       const errors: string[] = []
       if (!this.$v.name.$dirty) return errors
-      !this.$v.name.required && errors.push('Name is required.')
+      !this.$v.name.required && errors.push('Name is required')
       return errors
     },
     errors () {
@@ -147,7 +147,7 @@ export default Vue.extend({
     },
     clear (): void {
       this.$v.$reset()
-      this.$store.commit('setSelectedPhrase', null)
+      this.$store.commit('setSelectedPhrase', undefined)
       this.$store.commit('setName', '')
       this.resetResponses()
     },

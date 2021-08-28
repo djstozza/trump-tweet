@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const tweetPhraseOptions = [
+export const tweetPhraseOptions = [
   { label: 'Crooked Hillary', matcher: /hillary(\s+clinton)?|clinton/ig },
   { label: 'Crazy Bernie', matcher: /bernie(\s+sanders)?|sanders/ig },
   { label: "Cryin' Chuck", matcher: /chuck(\s+schumer)?|schumer/ig },
@@ -28,7 +28,7 @@ const tweetPhraseOptions = [
 export default new Vuex.Store({
   state: {
     tweetPhraseOptions,
-    selectedPhrase: null,
+    selectedPhrase: undefined,
     name: '',
     errors: [],
     success: ''
