@@ -64,7 +64,7 @@ import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
 import TweetService from '@/services/tweetService'
-import { TweetPhraseOption } from '../../types'
+import { TweetPhraseOption } from '@/types'
 
 declare module 'vue/types/vue' {
   interface Vue {

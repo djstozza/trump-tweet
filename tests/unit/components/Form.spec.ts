@@ -7,7 +7,7 @@ import Form from '@/components/Form.vue'
 import { tweetPhraseOptions } from '@/store'
 import TweetService from '@/services/tweetService'
 
-import { TweetPhraseOption } from '../../../types'
+import { TweetPhraseOption } from '@/types'
 
 type State = {
   tweetPhraseOptions: TweetPhraseOption[],

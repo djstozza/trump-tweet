@@ -3,6 +3,9 @@ const request = require('request')
 const path = require('path')
 const http = require('http')
 const socketIo = require('socket.io')
+const axios = require('axios')
+const sample = require('lodash/sample')
+const unescape = require('lodash/unescape')
 
 const Twit = require('twit')
 require('dotenv').config()
@@ -36,7 +39,39 @@ const io = socketIo(server, {
   }
 })
 
-app.post('/api/post', ({ query: { status } }, res) => {
+const setStatus = async (name, label, matcher) => {
+  const args = {
+    size: 100,
+    query: {
+      match: { text: { query: label, operator: 'and' } }
+    }
+  }
+
+  const headers = {
+    Authorization: `Basic ${process.env.AUTH}`
+  }
+
+  try {
+    const { data: { hits: { hits } } } = await axios.post(process.env.SEARCHLY_URL, args, { headers })
+    const hit = sample(hits)
+    const { _source: { text } } = hit
+    return unescape(text.replace(/@/g, '').replace(/&amp,/g, '&').replace(new RegExp(matcher, 'ig'), name))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+app.post('/api/post', async (req, res) => {
+  const { query } = req
+  const { name, label, matcher } = query
+  const status = await setStatus(name, label, matcher)
+
+  if (!status) {
+    res.statusCode = 422
+    res.send({ messages: ['Unable to create at this time'] })
+    return
+  }
+
   T.post('statuses/update', { status })
     .catch(error => {
       const { statusCode, allErrors } = error
