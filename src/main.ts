@@ -10,7 +10,7 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
-const connectionUrl = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_API_URL : '/'
+const connectionUrl = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_API_URL || '' : '/'
 
 Vue.use(
   new VueSocketIO({
