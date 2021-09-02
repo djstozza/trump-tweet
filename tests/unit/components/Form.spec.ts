@@ -96,18 +96,17 @@ describe('Form', () => {
   it('enables the submit button if there is a name and selectedPhrase', async () => {
     const postTweet =
       jest
-      .spyOn(TweetService, 'postTweet')
-      .mockReturnValue(Promise.resolve({ success: 'Success!', errors: ['Error 1', 'Error 2'] }))
+        .spyOn(TweetService, 'postTweet')
+        .mockReturnValue(Promise.resolve({ success: 'Success!', errors: ['Error 1', 'Error 2'] }))
 
-      const setSuccess = jest.fn()
-      const setErrors = jest.fn()
-      const setSelectedPhrase = jest.fn()
+    const setSuccess = jest.fn()
+    const setErrors = jest.fn()
 
-      const mutations = {
-        ...storeMutations,
-        setSuccess,
-        setErrors
-      }
+    const mutations = {
+      ...storeMutations,
+      setSuccess,
+      setErrors
+    }
 
     const state = {
       ...initialState,

@@ -1,5 +1,5 @@
 import express, { Request } from 'express'
-import { getMockReq, getMockRes } from '@jest-mock/express'
+import { getMockRes } from '@jest-mock/express'
 import app, { staticPath, productionSetup, sendFilePath, sendFile } from '../../../server/app'
 
 const originalNodeEnv = process.env.NODE_ENV

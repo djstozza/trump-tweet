@@ -16,8 +16,8 @@ module.exports = {
     config
       .plugin('html')
       .tap(args => {
-          args[0].title = "Trump Tweet #MGTA";
-          return args;
+        args[0].title = 'Trump Tweet #MGTA'
+        return args
       })
   }
 }

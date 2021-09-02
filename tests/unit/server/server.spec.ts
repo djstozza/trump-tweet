@@ -10,7 +10,7 @@ describe('server', () => {
     stream.emit('tweet', { id: '1' })
 
     expect(streamMock).toHaveBeenCalled()
-    expect(ioMock).toHaveBeenCalledWith('broadcastTweet', '1')
+    expect(ioMock).toHaveBeenCalledWith('BroadcastTweet', '1')
   })
 
   it('changes the origin based on the NODE_ENV', () => {

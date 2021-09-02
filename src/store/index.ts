@@ -41,7 +41,7 @@ export const mutations = {
   setName: (state: State, name: string): void => { state.name = name },
   setErrors: (state: State, errors: string[]): void => { state.errors = errors },
   setSuccess: (state: State, success: string): void => { state.success = success },
-  SOCKET_broadcastTweet: (state: State, tweetId: string): void => { state.latestTweetId = tweetId }
+  socketBroadcastTweet: (state: State, tweetId: string): void => { state.latestTweetId = tweetId }
 }
 
 export default new Vuex.Store({

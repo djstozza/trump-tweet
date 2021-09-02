@@ -1,6 +1,5 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import Twit from 'twit'
 
 import TweetService from '@/services/tweetService'
 import { tweetPhraseOptions } from '@/store'

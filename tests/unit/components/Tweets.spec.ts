@@ -1,4 +1,4 @@
-import { shallowMount, mount, createLocalVue, Wrapper } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import Vuex from 'vuex'
@@ -6,8 +6,6 @@ import Vuex from 'vuex'
 import Tweets from '@/components/Tweets.vue'
 
 Vue.use(Vuetify)
-
-const vuetify = new Vuetify()
 
 describe('Tweets', () => {
   const localVue = createLocalVue()
@@ -35,7 +33,6 @@ describe('Tweets', () => {
   })
 
   it('changes the height on window resize', () => {
-    const setContainerHeight = jest.fn()
     const wrapper = render({}, { latestTweetId: '123' })
 
     Object.defineProperty(window, 'innerHeight', {

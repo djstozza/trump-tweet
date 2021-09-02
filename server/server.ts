@@ -19,6 +19,6 @@ export const io = new Server(server, {
 
 export const stream = twit.stream('statuses/filter', { follow: process.env.TWITTER_ID })
 
-stream.on('tweet', ({ id }:{ id: string }) => io.emit('broadcastTweet', id))
+stream.on('tweet', ({ id }:{ id: string }) => io.emit('BroadcastTweet', id))
 
 export default server

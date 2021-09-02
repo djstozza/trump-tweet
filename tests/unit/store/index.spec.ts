@@ -5,7 +5,7 @@ const {
   setName,
   setErrors,
   setSuccess,
-  SOCKET_broadcastTweet
+  socketBroadcastTweet
 } = mutations
 
 describe('store', () => {
@@ -41,9 +41,9 @@ describe('store', () => {
       })
     })
 
-    describe('SOCKET_broadcastTweet', () => {
+    describe('socketBroadcastTweet', () => {
       it('sets the latestTweetId', () => {
-        SOCKET_broadcastTweet(initialState, '123')
+        socketBroadcastTweet(initialState, '123')
         expect(initialState.latestTweetId).toEqual('123')
       })
     })

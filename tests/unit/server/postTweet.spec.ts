@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { PromiseResponse } from 'twit'
 
 import PostTweet from '../../../server/postTweet'
-import { twit } from  '../../../server/tweet'
+import { twit } from '../../../server/tweet'
 import { tweetPhraseOptions } from '@/store'
 
 const mock = new MockAdapter(axios)
@@ -63,7 +63,7 @@ describe('postTweet', () => {
 
   it('fails if the matcher is not a string', async () => {
     const req = getMockReq({ query: { name: 'name', label: 'label', matcher: 1 } })
-    const { res, next } = getMockRes()
+    const { res } = getMockRes()
 
     await PostTweet(req, res)
 
