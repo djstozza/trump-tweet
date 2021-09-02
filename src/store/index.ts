@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import { State, TweetPhraseOption } from '@/types'
+
 Vue.use(Vuex)
 
 export const tweetPhraseOptions = [
@@ -25,24 +27,26 @@ export const tweetPhraseOptions = [
   { label: 'Sleepy Joe', matcher: 'joe(\\s+biden)?|biden' }
 ]
 
+export const initialState = {
+  tweetPhraseOptions,
+  selectedPhrase: undefined,
+  name: '',
+  errors: [],
+  success: '',
+  latestTweetId: ''
+}
+
+export const mutations = {
+  setSelectedPhrase: (state: State, tweet?: TweetPhraseOption): void => { state.selectedPhrase = tweet },
+  setName: (state: State, name: string): void => { state.name = name },
+  setErrors: (state: State, errors: string[]): void => { state.errors = errors },
+  setSuccess: (state: State, success: string): void => { state.success = success },
+  SOCKET_broadcastTweet: (state: State, tweetId: string): void => { state.latestTweetId = tweetId }
+}
+
 export default new Vuex.Store({
-  state: {
-    tweetPhraseOptions,
-    selectedPhrase: undefined,
-    name: '',
-    errors: [],
-    success: ''
-  },
-  mutations: {
-    setSelectedPhrase: (state, tweet) => {
-      state.selectedPhrase = tweet
-    },
-    setName: (state, name) => {
-      state.name = name
-    },
-    setErrors: (state, errors) => { state.errors = errors },
-    setSuccess: (state, success) => { state.success = success }
-  },
+  state: initialState,
+  mutations,
   actions: {
   },
   modules: {

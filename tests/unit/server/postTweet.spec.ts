@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Request, Response } from 'express'
 import { getMockReq, getMockRes } from '@jest-mock/express'
 import MockAdapter from 'axios-mock-adapter'
 import { PromiseResponse } from 'twit'

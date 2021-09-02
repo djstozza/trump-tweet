@@ -1,8 +1,6 @@
-import { server, io, stream } from '../../../server/server'
-import http, { Server } from 'http'
-import { PromiseResponse } from 'twit'
+import { io, stream, origin } from '../../../server/server'
 
-import { twit } from  '../../../server/tweet'
+const originalNodeEnv = process.env.NODE_ENV
 
 describe('server', () => {
   it('broadcasts tweet ids via streaming', async () => {
@@ -13,5 +11,15 @@ describe('server', () => {
 
     expect(streamMock).toHaveBeenCalled()
     expect(ioMock).toHaveBeenCalledWith('broadcastTweet', '1')
+  })
+
+  it('changes the origin based on the NODE_ENV', () => {
+    expect(origin()).toEqual('/')
+
+    process.env.NODE_ENV = 'development'
+
+    expect(origin()).toEqual(process.env.VUE_CLIENT_URL)
+
+    process.env.NODE_ENV = originalNodeEnv
   })
 })

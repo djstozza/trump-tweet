@@ -4,18 +4,8 @@ import Vuetify from 'vuetify'
 import Vuex from 'vuex'
 
 import Form from '@/components/Form.vue'
-import { tweetPhraseOptions } from '@/store'
+import { initialState, mutations as storeMutations, tweetPhraseOptions } from '@/store'
 import TweetService from '@/services/tweetService'
-
-import { TweetPhraseOption } from '@/types'
-
-type State = {
-  tweetPhraseOptions: TweetPhraseOption[],
-  selectedPhrase?: TweetPhraseOption,
-  name: string,
-  errors: string[],
-  success: string
-}
 
 Vue.use(Vuetify)
 
@@ -26,25 +16,10 @@ describe('Form', () => {
 
   const vuetify = new Vuetify()
 
-  const STATE = {
-    tweetPhraseOptions,
-    selectedPhrase: undefined,
-    name: '',
-    errors: [],
-    success: ''
-  }
-
-  const MUTATIONS = {
-    setSelectedPhrase: () => {},
-    setName: (state: State, name: string) => {},
-    setErrors: (state: State, errors: string[]) => {},
-    setSuccess: (state: State, success: string) => {}
-  }
-
   const render = (props = {}, context = {}) => {
     const store = new Vuex.Store({
-      state: STATE,
-      mutations: MUTATIONS,
+      state: initialState,
+      mutations: storeMutations,
       ...context
     })
     document.body.setAttribute('data-app', 'true')
@@ -60,7 +35,7 @@ describe('Form', () => {
   it('sets the selected option', async () => {
     const setSelectedPhrase = jest.fn()
     const mutations = {
-      ...MUTATIONS,
+      ...storeMutations,
       setSelectedPhrase
     }
     const wrapper = render({}, { mutations })
@@ -71,24 +46,24 @@ describe('Form', () => {
     await localVue.nextTick()
 
     expect(setSelectedPhrase)
-      .toHaveBeenCalledWith(STATE, tweetPhraseOptions[1])
+      .toHaveBeenCalledWith(initialState, tweetPhraseOptions[1])
   })
 
   it('sets the name', () => {
     const setName = jest.fn()
     const mutations = {
-      ...MUTATIONS,
+      ...storeMutations,
       setName
     }
     const wrapper = render({}, { mutations })
 
     textField(wrapper).find('input').setValue('name')
-    expect(setName).toHaveBeenCalledWith(STATE, 'name')
+    expect(setName).toHaveBeenCalledWith(initialState, 'name')
   })
 
   it('renders the text value from the state', () => {
     const state = {
-      ...STATE,
+      ...initialState,
       name: 'Foo'
     }
 
@@ -129,13 +104,13 @@ describe('Form', () => {
       const setSelectedPhrase = jest.fn()
 
       const mutations = {
-        ...MUTATIONS,
+        ...storeMutations,
         setSuccess,
         setErrors
       }
 
     const state = {
-      ...STATE,
+      ...initialState,
       name: 'Foo',
       selectedPhrase: tweetPhraseOptions[0]
     }
@@ -164,7 +139,7 @@ describe('Form', () => {
 
   it('disables the submit and clear buttons if submitting = true, even if other values are present', () => {
     const state = {
-      ...STATE,
+      ...initialState,
       name: 'Foo',
       selectedPhrase: tweetPhraseOptions[0]
     }
@@ -181,12 +156,12 @@ describe('Form', () => {
     const setName = jest.fn()
 
     const state = {
-      ...STATE,
+      ...initialState,
       name: 'Foo'
     }
 
     const mutations = {
-      ...MUTATIONS,
+      ...storeMutations,
       setSelectedPhrase,
       setName
     }
@@ -203,7 +178,7 @@ describe('Form', () => {
 
   it('shows snackbar errors when showErrors = true and errors is not empty', () => {
     const state = {
-      ...STATE,
+      ...initialState,
       errors: ['Error 1', 'Error 2']
     }
 
@@ -221,7 +196,7 @@ describe('Form', () => {
 
   it('shows the success snackbar if showSuccess = true and success is not blank', () => {
     const state = {
-      ...STATE,
+      ...initialState,
       success: 'Success!'
     }
 

@@ -18,7 +18,7 @@ const setStatus = async (name: string, label: string , matcher: string) => {
   }
 
   try {
-    const { data: { hits: { hits } } } = await axios.post(process.env.SEARCHLY_URL || '', args, { headers })
+    const { data: { hits: { hits } } } = await axios.post(process.env.SEARCHLY_URL!, args, { headers })
     const hit = sample(hits)
     const { _source: { text } } = hit
 

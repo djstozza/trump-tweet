@@ -37,15 +37,16 @@ export default Vue.extend({
   },
 
   data: () => ({
-    height: '',
-    latestTweetId: ''
+    height: ''
   }),
+
+  computed: {
+    latestTweetId (): string { return this.$store.state.latestTweetId }
+  },
 
   methods: {
     setContainerHeight () {
-      if (this.$refs.container) {
-        this.height = window.innerHeight - (this.$refs.container as HTMLElement).offsetTop - APP_BAR_HEIGHT + 'px'
-      }
+      this.height = window.innerHeight - (this.$refs.container as HTMLElement).offsetTop - APP_BAR_HEIGHT + 'px'
     }
   },
 
@@ -55,12 +56,6 @@ export default Vue.extend({
 
   created () {
     window.addEventListener('resize', this.setContainerHeight)
-  },
-
-  sockets: {
-    broadcastTweet (data: string): void {
-      this.latestTweetId = data
-    }
   }
 })
 </script>
